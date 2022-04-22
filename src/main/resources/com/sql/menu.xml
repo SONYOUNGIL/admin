@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace="app.menu.MenuMapper">
+ 
+    <select id="selectMenu" resultType="app.menu.Menu" parameterType="app.menu.Menu">
+        select /* [SQLID:app.user.UserMapper.selectUser ]*/ 
+              	*
+		   from User_table
+		  where 1=1
+		   <if test="vesselCode != null and !vesselCode.equals('')">
+              and vessel_code = #{vesselCode}
+           </if>
+		   <if test="voyNo != null and !voyNo.equals('')">
+              and voy_no = #{voyNo}
+           </if>
+           <if test="dirCode != null and !dirCode.equals('')">
+              and dir_code = #{dirCode}
+           </if>
+    </select>
+    
+</mapper>

@@ -1,0 +1,19 @@
+stages:          # List of stages for jobs, and their order of execution
+  - deploy
+ 
+ 
+deploy-job:      # This job runs in the deploy stage.
+  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+  script:
+    - pwd
+    - ls -al
+    - cd uenzin/order
+    - ls
+    - gcloud builds submit --config=cloudbuild.yaml --substitutions=_DEPLOY_DATE=$(date +'%y%m%d-%H%M')
+    - echo "!!! maven build success !!!"
+    #- skaffold build -f skaffold.yaml --interactive=false --file-output=artifacts.json --cache-artifacts=false 
+    - echo "Application successfully builts"
+    - pwd
+    - ls
+    #- gcloud deploy releases create test-release-rel-$(date +%y%m%d-%H%M)   --project=one-dev-345702  --region=asia-northeast1 --delivery-pipeline=cloud-deploy-test --build-artifacts=artifacts.json
+    - echo "Application successfully released."
