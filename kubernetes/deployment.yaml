@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: order
+  name: admin
   labels:
-    app: order
+    app: admin
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: order
+      app: admin
   template:
     metadata:
       labels:
-        app: order
+        app: admin
     spec:
       containers:
-        - name: order
-          image: gcr.io/one-dev-345702/order:latest
+        - name: admin
+          image: gcr.io/one-dev-345702/admin:latest
           ports:
-            - containerPort: 8080
+            - containerPort: 8082
           readinessProbe:
             httpGet:
               path: '/actuator/health'
-              port: 8080
+              port: 8082
             initialDelaySeconds: 10
             timeoutSeconds: 2
             periodSeconds: 5
@@ -30,7 +30,7 @@ spec:
           livenessProbe:
             httpGet:
               path: '/actuator/health'
-              port: 8080
+              port: 8082
             initialDelaySeconds: 120
             timeoutSeconds: 2
             periodSeconds: 5
