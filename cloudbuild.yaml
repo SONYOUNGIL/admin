@@ -20,7 +20,7 @@ steps:
     name: 'gcr.io/cloud-builders/docker'
     args:
       - 'build'
-      - '--tag=gcr.io/$PROJECT_ID/order:latest'
+      - '--tag=gcr.io/$PROJECT_ID/admin:latest'
       - '.'
   ### Publish
   - id: 'publish'
@@ -29,7 +29,7 @@ steps:
     args:
       - '-c'
       - |
-        docker push gcr.io/$PROJECT_ID/order:latest
+        docker push gcr.io/$PROJECT_ID/admin:latest
 
   ### cloud deploy 
   - id: 'cloud deploy'
