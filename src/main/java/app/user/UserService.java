@@ -40,7 +40,6 @@ public class UserService {
         Result result = new Result();
         HttpSession session = request.getSession();  
         try{
-            System.out.println(paramMap);
             // log.info(rsaSecureEncoder.decryptRsa((PrivateKey) paramMap.get("privateKey"), (String) paramMap.get("userPwd")));
             paramMap.put("userId", rsaSecureEncoder.decryptRsa( (PrivateKey) session.getAttribute(rsaSecureEncoder.RSA_WEB_KEY), (String) paramMap.get("userId")));
             paramMap.put("userPwd", rsaSecureEncoder.decryptRsa( (PrivateKey) session.getAttribute(rsaSecureEncoder.RSA_WEB_KEY), (String) paramMap.get("userPwd")));

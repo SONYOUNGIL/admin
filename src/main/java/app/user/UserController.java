@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.com.config.AppConstant;
+import app.com.util.Result;
 import app.com.util.RsaSecureEncoder;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,6 +32,13 @@ public class UserController {
       return rsaSecureEncoder.initRsa(request); // RSA 키 생성	
   }
 
+  @PostMapping("/getMsg")
+  public Map<String, Object> getMsg() {
+    Result result = new Result();
+    result.setData("msg_code", AppConstant.codeMap);
+    return result.getResult();
+  }
+  
   /**
    * Select Data
    * @param user

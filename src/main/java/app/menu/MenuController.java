@@ -21,10 +21,14 @@ public class MenuController {
   @Autowired
   private MenuService menuService;
   
-  @PostMapping("/getMsg")
-  public Map<String, Object> getMsg() {
-    Result result = new Result();
-    result.setData("msg_code", AppConstant.codeMap);
-    return result.getResult();
+  @PostMapping("/selectMenu")
+  public Map<String, Object> selectMenu() {
+    Result result = new Result();		
+		try {			
+			result.setData("dataList", menuService.selectMenu());
+		} catch (Exception ex) {
+			result.setFailMsg(ex, AppConstant.codeMap.get("EN001"));//"An error has occurred");			
+		}		
+		return result.getResult();
   }
 }

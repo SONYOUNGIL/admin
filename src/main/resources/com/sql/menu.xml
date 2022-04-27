@@ -5,20 +5,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <mapper namespace="app.menu.MenuMapper">
  
-    <select id="selectMenu" resultType="app.menu.Menu" parameterType="app.menu.Menu">
-        select /* [SQLID:app.user.UserMapper.selectUser ]*/ 
-              	*
-		   from User_table
-		  where 1=1
-		   <if test="vesselCode != null and !vesselCode.equals('')">
-              and vessel_code = #{vesselCode}
-           </if>
-		   <if test="voyNo != null and !voyNo.equals('')">
-              and voy_no = #{voyNo}
-           </if>
-           <if test="dirCode != null and !dirCode.equals('')">
-              and dir_code = #{dirCode}
-           </if>
+    <select id="selectMenu" resultType="java.util.HashMap">
+        /* [SQLID:app.menu.MenuMapper.selectMenu ]*/ 
+        		with recursive search_menu(menu_id, parent_id, menu_name, route_name, level, path, cycle) 
+			  as ( select g.menu_id, 
+		                  g.parent_id, 
+		                  g.menu_name, 
+		                  g.route_name, 
+		                  1, 
+		                  array [g.menu_id], 
+		                  false
+		             from menu_table g
+		            where g.parent_id is null
+		            union all
+		            select g.menu_id, 
+		                   g.parent_id, 
+		                   g.menu_name, 
+		                   g.route_name, 
+		                   level + 1,
+		                   path || g.menu_id, 
+		                   g.menu_id = any(path)
+		              from menu_table g, search_menu sb
+		             where g.parent_id = sb.menu_id 
+		               and not cycle) 
+	      select menu_id, 
+	             parent_id, 
+	             menu_name, 
+	             route_name, 
+	             level
+	         from search_menu order by path
     </select>
     
 </mapper>
