@@ -4,7 +4,7 @@ server:
 ---
 
 spring:
-  profiles: default
+  #profiles: default
   main:
     allow-bean-definition-overriding: true
   output:
