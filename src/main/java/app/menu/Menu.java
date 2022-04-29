@@ -23,13 +23,16 @@ public class Menu  extends AbstractEvent{
     @Id
     private int menuId;
 
+    @Column(nullable = true)
     private int parentId;
 
     @Column(length = 100)
     private String menuName;
 
-    @Column(length = 100)
-    private String programId;
+    @Column(length = 500)
+    private String routeName;
+
+    private String updateUserId;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     @UpdateTimestamp
