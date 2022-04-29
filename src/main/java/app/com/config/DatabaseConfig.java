@@ -17,7 +17,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -27,15 +30,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:/com/properties/app-db.properties")
 public class DatabaseConfig {
     
-    @Autowired 
-    Environment env;
+    Properties env;
     
     @Primary
     @Bean
     public DataSource dataSource() throws Exception {
+        // -Dtys-msa.prod=local"spring.profiles.active
+        String prod_nm = System.getProperty("tys-msa.prod");    	
+		
+		Resource resource = new ClassPathResource("/com/properties/app-"+prod_nm+".properties"); 
+    	env = PropertiesLoaderUtils.loadProperties(resource);
 
     	HikariConfig hikariConfig = new HikariConfig();
     	hikariConfig.setDriverClassName(env.getProperty("db.driver-class-name"));
@@ -59,6 +65,9 @@ public class DatabaseConfig {
         sqlSessionFactoryBean.setDataSource(dataSource());
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/com/sql/*.xml"));
+        Properties mybatisProperties = new Properties();
+        mybatisProperties.setProperty("mapUnderscoreToCamelCase", "true"); // CamelCase 자동맵핑
+        sqlSessionFactoryBean.setConfigurationProperties(mybatisProperties);
         return sqlSessionFactoryBean.getObject();
     }
 

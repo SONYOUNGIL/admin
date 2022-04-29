@@ -18,9 +18,23 @@ public class MenuService {
     /**
      * Mybatis SELECT EXAMPLE
      * @param 
-     * @return List<Cbf>
+     * @return List<Menu>
      */
     public List<Map> selectMenu() {
         return menuMapper.selectMenu();
     }
+
+    public void saveAllMenu(List<Menu> list) throws Exception {
+        menuRepository.saveAll(list);
+	}
+
+    /**
+     * Delete All Data
+     * @param list
+     * @return int
+     * @throws Exception
+     */
+    public void deleteAllMenu(List<Menu> list) throws Exception {
+        menuRepository.deleteAll(list);
+	}
 }
