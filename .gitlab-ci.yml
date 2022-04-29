@@ -5,8 +5,8 @@ deploy-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
   only:
     - main
-  script:
-    - pwd
+  script: 
+    - pwd 
     - ls -al
     - ls
     - gcloud builds submit --config=cloudbuild.yaml --substitutions=_DEPLOY_DATE=$(date +'%y%m%d-%H%M')

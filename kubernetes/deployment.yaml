@@ -15,26 +15,23 @@ spec:
         app: admin
     spec:
       containers:
-      - env:
-        - name: spring.profiles.active
-          value: dev
-        - name: admin
-          image: gcr.io/one-dev-345702/admin:latest
-          ports:
-            - containerPort: 8082
-          readinessProbe:
-            httpGet:
-              path: '/'
-              port: 8082
-            initialDelaySeconds: 10
-            timeoutSeconds: 2
-            periodSeconds: 5
-            failureThreshold: 10
-          livenessProbe:
-            httpGet:
-              path: '/'
-              port: 8082
-            initialDelaySeconds: 120
-            timeoutSeconds: 2
-            periodSeconds: 5
-            failureThreshold: 5
+        name: admin
+        image: gcr.io/one-dev-345702/admin:latest
+        ports:
+          - containerPort: 8082
+        readinessProbe:
+          httpGet:
+            path: '/'
+            port: 8082
+          initialDelaySeconds: 10
+          timeoutSeconds: 2
+          periodSeconds: 5
+          failureThreshold: 10
+        livenessProbe:
+          httpGet:
+            path: '/'
+            port: 8082
+          initialDelaySeconds: 120
+          timeoutSeconds: 2
+          periodSeconds: 5
+          failureThreshold: 5
