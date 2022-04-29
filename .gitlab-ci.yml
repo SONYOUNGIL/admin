@@ -6,7 +6,7 @@ deploy-job:      # This job runs in the deploy stage.
   only:
     - main
   script:
-    - pwd
+    - pwd 
     - ls -al
     - ls
     - gcloud builds submit --config=cloudbuild.yaml --substitutions=_DEPLOY_DATE=$(date +'%y%m%d-%H%M')
