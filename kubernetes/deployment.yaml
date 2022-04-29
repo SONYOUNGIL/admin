@@ -15,6 +15,9 @@ spec:
         app: admin
     spec:
       containers:
+      - env:
+        - name: spring.profiles.active
+          value: dev
         - name: admin
           image: gcr.io/one-dev-345702/admin:latest
           ports:
