@@ -37,8 +37,8 @@ public class DatabaseConfig {
     @Primary
     @Bean
     public DataSource dataSource() throws Exception {
-        // -Dtys-msa.prod=local"spring.profiles.active
-        String prod_nm = System.getProperty("tys-msa.prod");    	
+        // -Dtys-msa.prod=local"
+        String prod_nm = System.getProperty("spring.profiles.active");    	
 		
 		Resource resource = new ClassPathResource("/com/properties/app-"+prod_nm+".properties"); 
     	env = PropertiesLoaderUtils.loadProperties(resource);
