@@ -15,11 +15,11 @@ spec:
         app: admin
     spec:
       containers:
-      - env:
-        - name: spring.profiles.active
-          value: dev
-        image: gcr.io/one-dev-345702/admin:latest
         name: admin
+        image: gcr.io/one-dev-345702/admin:latest
+        env:
+          - name: spring.profiles.active
+            value: dev
         ports:
           - containerPort: 8082
         readinessProbe:
