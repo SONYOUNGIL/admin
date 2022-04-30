@@ -46,7 +46,18 @@ public class UserController {
    */
   @PostMapping("/login")
   public Map<String, Object> login(HttpServletRequest request, @RequestBody Map<String, Object> paramMap) {
-    Map<String, Object> map  = userService.selectUser(request, paramMap);
+    Map<String, Object> map  = userService.login(request, paramMap);
 		return map;
+  }
+
+  @PostMapping("/selectUser")
+  public Map<String, Object> selectUser(@RequestBody User user) {
+    Result result = new Result();		
+		try {			
+			result.setData("dataList", userService.selectUser(user));
+		} catch (Exception ex) {
+			result.setFailMsg(ex, AppConstant.codeMap.get("EN001"));//"An error has occurred");			
+		}		
+		return result.getResult();
   }
 }
