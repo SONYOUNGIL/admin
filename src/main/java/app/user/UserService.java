@@ -36,7 +36,7 @@ public class UserService {
      * @return List<User>
      * @throws Exception
      */
-    public Map<String, Object> selectUser(HttpServletRequest request, Map<String, Object> paramMap)  {
+    public Map<String, Object> login(HttpServletRequest request, Map<String, Object> paramMap)  {
         Result result = new Result();
         HttpSession session = request.getSession();  
         try{
@@ -44,7 +44,7 @@ public class UserService {
             paramMap.put("userId", rsaSecureEncoder.decryptRsa( (PrivateKey) session.getAttribute(rsaSecureEncoder.RSA_WEB_KEY), (String) paramMap.get("userId")));
             paramMap.put("userPwd", rsaSecureEncoder.decryptRsa( (PrivateKey) session.getAttribute(rsaSecureEncoder.RSA_WEB_KEY), (String) paramMap.get("userPwd")));
 
-            User loginUser = userMapper.selectUser(paramMap);		
+            User loginUser = userMapper.login(paramMap);		
             if(!ObjectUtils.isEmpty(loginUser)) {            
                 result.setData("token", jwtManager.generateJwtToken(loginUser));
                 result.setMsg(result.STATUS_SUCESS, "Login success");
@@ -55,6 +55,10 @@ public class UserService {
             e.printStackTrace();
         }
 		return result.getResult();
+    }
+
+    public List<User> selectUser(User user) {
+        return userMapper.selectUser(user);
     }
 
     /**

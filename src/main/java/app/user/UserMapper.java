@@ -1,5 +1,6 @@
 package app.user;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -7,5 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
 
-	 public User selectUser(Map<String, Object> paramMap);
+	 public User login(Map<String, Object> paramMap);
+
+	 public List<User> selectUser(User user);
 }

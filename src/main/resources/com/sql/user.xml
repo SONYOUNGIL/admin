@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <mapper namespace="app.user.UserMapper">
  
-    <select id="selectUser" resultType="app.user.User" parameterType="java.util.HashMap">
+    <select id="login" resultType="app.user.User" parameterType="java.util.HashMap">
         select user_id,
                email,
                file_id,
@@ -18,6 +18,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	      from user_table
 	     where user_id = #{userId} 
 	       and user_pwd = #{userPwd} 
+    </select>
+
+    <select id="selectUser" resultType="app.user.User" parameterType="app.user.User">
+        select user_id,
+               email,
+               file_id,
+               nick_name,
+               office_tel_no,
+               update_date,
+               user_name,
+               create_date,
+               create_user_id
+	      from user_table
+	     where 1 = 1
+           <if test="userId != null and !userId.equals('')">
+              and user_id = #{userId} 
+           </if>
+           <if test="userName != null and !userName.equals('')">
+               and user_name like '%' || #{userName} || '%'
+           </if>
     </select>
     
 </mapper>
