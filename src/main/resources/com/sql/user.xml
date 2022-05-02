@@ -22,6 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectUser" resultType="app.user.User" parameterType="app.user.User">
         select user_id,
+               user_pwd,
                email,
                file_id,
                nick_name,
